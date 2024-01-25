@@ -1,8 +1,14 @@
 #root {
   max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+body {
+  background: #FF3547 ;
+  display: flex;
 }
 
 .logo {
@@ -39,4 +45,20 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* ! NAVBAR */
+
+.navbar {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
 }

@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+// usePokemonDetails.ts
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import PokemonDetails from '../../components/pokemonDetails/PokemonDetails';
-import Loader from '../../components/loader/Loader';
 
 interface Pokemon {
   id: number;
@@ -12,21 +10,20 @@ interface Pokemon {
     name: string;
     image: string;
   }[];
-  apiPrevEvolution: {
-    id: number;
+  apiPreEvolution: {
     name: string;
-    image: string;
-  }[];
-  apiNextEvolution: {
-    id: number;
+    pokedexId: number;
+  };
+  apiEvolutions: {
     name: string;
-    image: string;
+    pokedexIdd: number;
   }[];
 }
 
-const GetOnePokemon: React.FC = () => {
-  const { pokemonId } = useParams<{ pokemonId: string }>();
+const usePokemonDetails = (pokemonId: string) => {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
+  const [pokemonEvolution, setPokemonEvolution] = useState<Pokemon | null>(null);
+  const [pokemonPreEvolution, setPokemonPreEvolution] = useState<Pokemon | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,36 +32,51 @@ const GetOnePokemon: React.FC = () => {
         const response = await axios.get(`https://pokebuildapi.fr/api/v1/pokemon/${pokemonId}`);
         setPokemon(response.data);
         console.log(response.data);
+
+        const evolutionId = response.data.apiEvolutions[0]?.pokedexId;
+        const preEvolutionId = response.data.apiPreEvolution?.pokedexIdd;
+        
+
+        if (evolutionId) {
+          await fetchPokemonEvolution(evolutionId);
+        } 
+
+        if (preEvolutionId && preEvolutionId !== 'none') {
+            await fetchPokemonPreEvolution(preEvolutionId);
+          }
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+    const fetchPokemonEvolution = async (evolutionId: number) => {
+      try {
+        const evolutionResponse = await axios.get(`https://pokebuildapi.fr/api/v1/pokemon/${evolutionId}`);
+        setPokemonEvolution(evolutionResponse.data);
+        console.log(evolutionResponse.data);
         
       } catch (error) {
         console.log(error);
-      } finally {
-        setLoading(false);
+      }
+    };
+
+    const fetchPokemonPreEvolution = async (prevEvolutionId: number) => {
+      try {
+        const pokemonPreEvolution = await axios.get(`https://pokebuildapi.fr/api/v1/pokemon/${prevEvolutionId}`);
+        setPokemonPreEvolution(pokemonPreEvolution.data);
+        console.log(pokemonPreEvolution.data);
+        
+      } catch (error) {
+        console.log(error);
       }
     };
 
     fetchPokemonDetails();
   }, [pokemonId]);
 
-  if (loading) {
-    return <Loader />; // Affiche le Loader pendant le chargement
-  }
-
-  if (!pokemon) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <div>
-      {loading && <Loader />} {/* Afficher le Loader si en cours de chargement */}
-      {!loading && (
-        <div className="container">
-          <h2 className="header">Détails du Pokémon</h2>
-          <PokemonDetails pokemon={pokemon} />
-        </div>
-      )}
-    </div>
-  );
+  return { pokemon, pokemonEvolution, pokemonPreEvolution, loading };
 };
 
-export default GetOnePokemon;
+export default usePokemonDetails;

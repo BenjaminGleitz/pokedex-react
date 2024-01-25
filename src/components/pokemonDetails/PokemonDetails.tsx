@@ -1,42 +1,46 @@
+// PokemonDetails.tsx
 import React from 'react';
 import './pokemonDetails.css';
+import usePokemonDetails from '../../services/getOnePokemon/getOnePokemon';
+import Loader from '../loader/Loader';
 
 interface PokemonDetailsProps {
-  pokemon: {
-    id: number;
-    name: string;
-    image: string;
-    apiTypes: { 
-      name: string;
-      image: string;
-    }[];
-    apiPrevEvolution: {
-      id: number;
-      name: string;
-      image: string;
-    }[];
-    apiNextEvolution: {
-      id: number;
-      name: string;
-      image: string;
-    }[];
-  };
+  pokemonId: string;
 }
 
-const PokemonDetails: React.FC<PokemonDetailsProps> = ({ pokemon }) => {
+const PokemonDetails: React.FC<PokemonDetailsProps> = ({ pokemonId }) => {
+  const { pokemon, loading, pokemonEvolution, pokemonPreEvolution } = usePokemonDetails(pokemonId);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (!pokemon) {
+    return <div>No Pokemon data available</div>;
+  }
+
   return (
-    <div className="details">
-      <p>ID du Pokémon : {pokemon.id}</p>
-      <p>Nom : {pokemon.name}</p>
-      <img src={pokemon.image} alt={pokemon.name} />
-      <div>
-        <h3>Types :</h3>
-        <ul>
-          {pokemon.apiTypes.map((type, index) => (
-            <li key={index}>{type.name}</li>
-          ))}
-        </ul>
+    <div className="details-container">
+      <div className="details-image-container">
+        <h2>{pokemon.name}</h2>
+        <img src={pokemon.image} alt={pokemon.name} />
       </div>
+
+      {pokemonPreEvolution && (
+        <div className="evolution-container">
+          <h3>Pre-evolution</h3>
+          <img src={pokemonPreEvolution.image} alt={pokemonPreEvolution.name} />
+          <p>{pokemonPreEvolution.name}</p>
+        </div>
+      )}
+
+      {pokemonEvolution && (
+        <div className="evolution-container">
+          <h3>Evolution</h3>
+          <img src={pokemonEvolution.image} alt={pokemonEvolution.name} />
+          <p>{pokemonEvolution.name}</p>
+        </div>
+      )}
     </div>
   );
 };

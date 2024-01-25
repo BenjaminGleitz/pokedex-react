@@ -1,20 +1,18 @@
-/* Styles pour le conteneur principal */
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    background-color: green;
   }
-  
-  /* Styles pour l'en-tête du Pokémon */
+
   .header {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
   }
   
-  /* Styles pour les détails du Pokémon */
-  .details {
+  .details-image-container {
     text-align: center;
   }
   

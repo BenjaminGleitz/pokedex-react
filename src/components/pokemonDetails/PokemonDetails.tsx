@@ -10,6 +10,16 @@ interface PokemonDetailsProps {
       name: string;
       image: string;
     }[];
+    apiPrevEvolution: {
+      id: number;
+      name: string;
+      image: string;
+    }[];
+    apiNextEvolution: {
+      id: number;
+      name: string;
+      image: string;
+    }[];
   };
 }
 

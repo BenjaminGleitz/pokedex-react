@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PokemonCard from '../../components/pokemonCard/PokemonCard';
+import Loader from '../../components/loader/Loader';
 
 interface Pokemon {
   id: number;
@@ -14,6 +15,7 @@ interface Pokemon {
 
 const GetPokemons: React.FC = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchPokemons = async () => {
     try {
@@ -21,6 +23,8 @@ const GetPokemons: React.FC = () => {
       setPokemons(response.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -29,10 +33,13 @@ const GetPokemons: React.FC = () => {
   }, []);
 
   return (
-    <div className="card-container">
-      {pokemons.map((pokemon) => (
-        <PokemonCard key={pokemon.id} pokemon={pokemon} />
-      ))}
+    <div>
+      {loading && <Loader />}
+      <div className="card-container">
+        {pokemons.map((pokemon) => (
+          <PokemonCard key={pokemon.id} pokemon={pokemon} />
+        ))}
+      </div>
     </div>
   );
 };

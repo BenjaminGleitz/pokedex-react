@@ -1,4 +1,3 @@
-// usePokemonDetails.ts
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -18,9 +17,17 @@ interface Pokemon {
     name: string;
     pokedexIdd: number;
   }[];
+  stats: {
+    HP: number;
+    attack: number;
+    defense: number;
+    special_attack: number;
+    special_defense: number;
+    speed: number;
+  };
 }
 
-const usePokemonDetails = (pokemonId: string) => {
+const getOnePokemon = (pokemonId: number) => {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [pokemonEvolution, setPokemonEvolution] = useState<Pokemon | null>(null);
   const [pokemonPreEvolution, setPokemonPreEvolution] = useState<Pokemon | null>(null);
@@ -55,7 +62,6 @@ const usePokemonDetails = (pokemonId: string) => {
       try {
         const evolutionResponse = await axios.get(`https://pokebuildapi.fr/api/v1/pokemon/${evolutionId}`);
         setPokemonEvolution(evolutionResponse.data);
-        console.log(evolutionResponse.data);
         
       } catch (error) {
         console.log(error);
@@ -66,7 +72,6 @@ const usePokemonDetails = (pokemonId: string) => {
       try {
         const pokemonPreEvolution = await axios.get(`https://pokebuildapi.fr/api/v1/pokemon/${prevEvolutionId}`);
         setPokemonPreEvolution(pokemonPreEvolution.data);
-        console.log(pokemonPreEvolution.data);
         
       } catch (error) {
         console.log(error);
@@ -79,4 +84,4 @@ const usePokemonDetails = (pokemonId: string) => {
   return { pokemon, pokemonEvolution, pokemonPreEvolution, loading };
 };
 
-export default usePokemonDetails;
+export default getOnePokemon;

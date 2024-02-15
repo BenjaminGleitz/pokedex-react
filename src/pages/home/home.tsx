@@ -1,10 +1,9 @@
 import React from 'react';
-import GetPokemons from '../../services/getAllPokemons/GetAllPokemons';
+import GetPokemons from '../../services/displayAllPokemons/displayAllPokemons';
 
 const Home: React.FC = () => {
   return (
     <div>
-      <h1>Pokemons</h1>
       <GetPokemons />
     </div>
   );

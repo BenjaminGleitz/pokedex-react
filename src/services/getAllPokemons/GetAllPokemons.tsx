@@ -1,25 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import PokemonCard from '../../components/pokemonCard/PokemonCard';
-import Loader from '../../components/loader/Loader';
 
 interface Pokemon {
   id: number;
   name: string;
   image: string;
+  apiGeneration: number;
   apiTypes: { 
     name: string;
     image: string;
   }[];
 }
 
-const GetPokemons: React.FC = () => {
+const getAllPokemons = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchPokemons = async () => {
     try {
-      const response = await axios.get('https://pokebuildapi.fr/api/v1/pokemon/limit/100');
+      const response = await axios.get('https://pokebuildapi.fr/api/v1/pokemon');
       setPokemons(response.data);
     } catch (error) {
       console.log(error);
@@ -32,16 +31,7 @@ const GetPokemons: React.FC = () => {
     fetchPokemons();
   }, []);
 
-  return (
-    <div>
-      {loading && <Loader />}
-      <div className="card-container">
-        {pokemons.map((pokemon) => (
-          <PokemonCard key={pokemon.id} pokemon={pokemon} />
-        ))}
-      </div>
-    </div>
-  );
+  return { pokemons, loading };
 };
 
-export default GetPokemons;
+export default getAllPokemons;

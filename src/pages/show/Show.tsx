@@ -8,7 +8,6 @@ const Show: React.FC = () => {
 
   return (
     <div>
-      <h1>Pokemons</h1>
       <PokemonDetails pokemonId={pokemonId} />
     </div>
   );

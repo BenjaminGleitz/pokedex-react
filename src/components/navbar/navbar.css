@@ -1,0 +1,38 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    align-items: center;
+    background-color: inherit;
+    color: white;
+    height: 80px;
+    font-weight: bold;
+    border-bottom: solid 1px white;
+    transform: translateY(0);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    z-index: 10;
+}
+
+.navbar-items a {
+    transition: color 0.3s ease;
+}
+
+
+.navbar-title {
+    margin-left: 50px;
+}
+
+.navbar-items {
+    margin-right: 10px;
+    justify-content: flex-end;
+}
+
+.navbar-items a {
+    color: white;
+    text-decoration: none;
+    margin: 0px 10px 0px 10px;
+}

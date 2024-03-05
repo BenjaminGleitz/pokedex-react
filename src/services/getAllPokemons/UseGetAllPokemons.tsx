@@ -6,13 +6,13 @@ interface Pokemon {
   name: string;
   image: string;
   apiGeneration: number;
-  apiTypes: { 
+  apiTypes: {
     name: string;
     image: string;
   }[];
 }
 
-const getAllPokemons = () => {
+const useGetAllPokemons = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -34,4 +34,4 @@ const getAllPokemons = () => {
   return { pokemons, loading };
 };
 
-export default getAllPokemons;
+export default useGetAllPokemons;

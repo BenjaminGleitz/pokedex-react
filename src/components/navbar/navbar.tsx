@@ -5,10 +5,8 @@ const Navbar: React.FC = () => {
     return (
         <nav className='navbar'>
             <div className="navbar-items">
-                <a href="/">Accueil</a>
                 <a href="/">Pokedex</a>
-                <a href="/">Equipe</a>
-                <a href="/">Contact</a>
+                <a href="/team">Mes pokémons</a>
                 <a href="#top">&#8593;</a>
             </div>
             <div className="navbar-title">

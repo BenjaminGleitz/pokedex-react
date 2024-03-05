@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import getAllPokemons from '../../services/getAllPokemons/GetAllPokemons';
+import useGetAllPokemons from '../getAllPokemons/UseGetAllPokemons.tsx';
 import getTypes from '../getTypes/getTypes.tsx';
 import PokemonCard from '../../components/pokemonCard/PokemonCard';
 import Loader from '../../components/loader/Loader';
@@ -7,7 +7,7 @@ import Select, { ValueType } from 'react-select';
 import '../../components/pokemonCard/PokemonCard.css';
 
 const GetPokemons: React.FC = () => {
-    const { pokemons, loading } = getAllPokemons();
+    const { pokemons, loading } = useGetAllPokemons();
     const { types, loading: typesLoading } = getTypes();
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
@@ -20,7 +20,15 @@ const GetPokemons: React.FC = () => {
     );
 
     const typeOptions = types.map(type => ({ value: type.name, label: type.name }));
-    const generationOptions = [{ value: 1, label: '1' }, { value: 2, label: '2' }, { value: 3, label: '3' }];
+    const generationOptions = [
+        { value: 1, label: '1' },
+        { value: 2, label: '2' },
+        { value: 3, label: '3' },
+        { value: 4, label: '4' },
+        { value: 5, label: '5' },
+        { value: 6, label: '6' },
+        { value: 7, label: '7' },
+        { value: 8, label: '8' }];
 
     const handleReset = () => {
         setSelectedTypes([]);
